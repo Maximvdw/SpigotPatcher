@@ -46,10 +46,18 @@ public class Main
             return;
         }
 
+        String requiredHash = "f2edc09c45b1f80237602dc0d1b05969";
+        String originalHash = Files.hash( originalFile, Hashing.md5() );
         System.out.println( "***** Starting patching process, please wait." );
-        System.out.println( "\tInput md5 Checksum: " + Files.hash( originalFile, Hashing.md5() ) );
+        System.out.println( "\tInput md5 Checksum: " + originalHash );
         System.out.println( "\tPatch md5 Checksum: " + Files.hash( patchFile, Hashing.md5() ) );
-
+        
+        // Check the requiredHash (Build 1649) With the input hash
+        if(!requiredHash.equals(originalHash)){
+            System.out.println( "\tPlease use the original Spigot #1649 build");
+            return;
+        }
+        
         try
         {
             new Patcher( patchFile, originalFile, outputFile ).patch();
